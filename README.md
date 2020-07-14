@@ -1,6 +1,6 @@
 # Pokedex-php
 
-# Uncomplete [Demo Here ](https://hassanalihazaraa.github.io/Pokedex-php) 
+# Uncomplete Demo Here https://hassanalihazaraa.github.io/Pokedex-php
 
 
 # Title: The pokemon challenge - PHP style
