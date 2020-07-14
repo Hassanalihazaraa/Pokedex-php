@@ -1,8 +1,5 @@
 # Pokedex-php
 
-# Uncomplete Demo Here https://hassanalihazaraa.github.io/Pokedex-php
-
-
 # Title: The pokemon challenge - PHP style
 
 - Repository: `challenge-pokemon-php`
