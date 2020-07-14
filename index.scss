@@ -1,0 +1,365 @@
+html {
+  background-image: url("assets/clouds1.jpg");
+
+}
+
+body {
+  transform: scale(0.85);
+
+}
+
+header {
+  text-align: center;
+  font-family: 'Fredoka One', cursive;
+  font-size: 40px;
+  letter-spacing: 3px;
+  color: #f54d4d;
+  text-decoration: underline;
+  text-decoration-color: gold;
+  margin-top: -20px;
+}
+
+
+.camera {
+  width: 80px;
+  line-height: 80px;
+  border-radius: 40px;
+  color: blue;
+}
+
+.aParent {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  animation-name: floating;
+  animation-duration: 7s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes floating {
+  from {
+    transform: translate(0, 0px);
+  }
+  65% {
+    transform: translate(0, 30px);
+  }
+  to {
+    transform: translate(0, -0px);
+  }
+}
+
+
+.firstScreen {
+  background-color: #f54d4d;
+  width: 500px;
+  height: 700px;
+  margin-top: 50px;
+  border-radius: 20px 0 0 20px;
+  padding: 30px;
+  float: left;
+  box-shadow: -5px 0 0 3px crimson;
+}
+
+.pokeFrame {
+  width: 500px;
+  height: 400px;
+  margin: 0 auto;
+  background-color: crimson;
+  border-radius: 15px;
+  padding-top: 10px;
+  box-shadow: inset 0 0 10px #a80e2d;
+
+
+}
+
+.pokemonScreen {
+  width: 450px;
+  height: 320px;
+  background-color: #3cff70;
+  margin: 0 auto;
+  border-radius: 15px;
+  box-shadow: inset 0 0 20px #ffffff;
+  border-style: solid;
+  border-width: 10px;
+  border-color: beige;
+}
+
+.hinges {
+  background: rgb(174, 238, 204);
+  background: linear-gradient(90deg, crimson, #f54d4d, crimson);
+  width: 40px;
+  height: 720px;
+  display: inline-block;
+  margin-top: 70px;
+  box-shadow: 3px 0 0 3px crimson;
+}
+
+.secondScreen {
+  background-color: #f54d4d;
+  width: 500px;
+  height: 700px;
+  margin-top: 50px;
+  border-radius: 0 20px 20px 0;
+  padding: 30px;
+  float: right;
+  box-shadow: 5px 0 0 3px crimson;
+}
+
+
+.searchContent {
+  margin-top: 70px;
+}
+
+.searchInput {
+  background-color: beige;
+  width: 200px;
+  padding: 20px;
+  border-radius: 7px;
+  color: darkslategray;
+  flex: auto;
+  margin-left: 20px;
+  text-align: right;
+  font-family: 'Fredoka One', cursive;
+  font-size: 20px;
+  outline-style: none;
+  border-style: solid;
+  border-width: 7px;
+  border-color: gold;
+}
+
+h2 {
+  text-align: center;
+  color: #a80e2d;
+  font-size: 40px;
+  margin-top: 7px;
+}
+
+.searchButton {
+  background-color: gold;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  color: blue;
+  margin-left: 20px;
+  box-shadow: 4px 4px 0 0 crimson;
+  font-family: 'Fredoka One', cursive;
+  font-size: 25px;
+  outline-style: none;
+  border-style: solid;
+  border-width: 5px;
+  border-color: beige;
+
+}
+
+.searchButton:hover {
+  color: orange;
+  border-radius: 100px;
+
+}
+
+.searchButton:active {
+  color: orange;
+  transform: translateY(4px);
+}
+
+.id-label {
+  display: none;
+  font-family: 'Fredoka One', cursive;
+  font-size: 20px;
+}
+
+.pokemonPic {
+  width: 50%;
+  height: 50%;
+}
+
+.name {
+  font-family: 'Fredoka One', cursive;
+}
+
+.id {
+  font-size: 1.5rem;
+}
+
+.moveList {
+  text-align: center;
+  list-style-type: none;
+  font-family: 'Fredoka One', cursive;
+  font-size: 20px;
+}
+
+//evolution
+.evoName {
+  font-family: 'Fredoka One', cursive;
+  font-size: 20px;
+}
+
+.evolution {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.evoImage {
+  width: 30%;
+  height: 30%;
+}
+
+.pokeLogo {
+  max-width: 150px;
+  margin-bottom: 25px;
+}
+
+.previous {
+  background-color: gold;
+  width: 80px;
+  height: 80px;
+  border-radius: 100px;
+  color: blue;
+  box-shadow: 4px 4px 0 0 crimson;
+  font-family: 'Fredoka One', cursive;
+  font-size: 25px;
+  margin-right: 20px;
+  outline-style: none;
+  border-style: solid;
+  border-width: 5px;
+  border-color: beige;
+}
+
+.next {
+  background-color: gold;
+  width: 80px;
+  height: 80px;
+  border-radius: 100px;
+  color: blue;
+  box-shadow: 4px 4px 0 0 crimson;
+  font-family: 'Fredoka One', cursive;
+  font-size: 25px;
+  outline-style: none;
+  border-style: solid;
+  border-width: 5px;
+  border-color: beige;
+}
+
+.next:hover {
+  color: orange;
+}
+
+.next:active {
+  color: orange;
+  transform: translateY(4px);
+}
+
+.previous:hover {
+  color: orange;
+}
+
+.previous:active {
+  color: orange;
+  transform: translateY(4px);
+}
+
+.buttons {
+  margin-top: 70px;
+}
+
+#rightframe {
+  margin-top: 45px;
+}
+
+.cloud {
+  margin-top: 12px;
+}
+
+.led-yellow {
+  margin: 0 auto;
+  margin-top: 20px;
+  width: 20px;
+  height: 20px;
+  background-color: #FF0;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #FF0 0 2px 12px;
+  -webkit-animation: blinkYellow 1s infinite;
+  -moz-animation: blinkYellow 1s infinite;
+  -ms-animation: blinkYellow 1s infinite;
+  -o-animation: blinkYellow 1s infinite;
+  animation: blinkYellow 1s infinite;
+}
+
+@-webkit-keyframes blinkYellow {
+  from {
+    background-color: #FF0;
+  }
+  50% {
+    background-color: #AA0;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #FF0 0 2px 0;
+  }
+  to {
+    background-color: #FF0;
+  }
+}
+
+@-moz-keyframes blinkYellow {
+  from {
+    background-color: #FF0;
+  }
+  50% {
+    background-color: #AA0;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #FF0 0 2px 0;
+  }
+  to {
+    background-color: #FF0;
+  }
+}
+
+@-ms-keyframes blinkYellow {
+  from {
+    background-color: #FF0;
+  }
+  50% {
+    background-color: #AA0;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #FF0 0 2px 0;
+  }
+  to {
+    background-color: #FF0;
+  }
+}
+
+@-o-keyframes blinkYellow {
+  from {
+    background-color: #FF0;
+  }
+  50% {
+    background-color: #AA0;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #FF0 0 2px 0;
+  }
+  to {
+    background-color: #FF0;
+  }
+}
+
+@keyframes blinkYellow {
+  from {
+    background-color: #FF0;
+  }
+  50% {
+    background-color: #AA0;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #FF0 0 2px 0;
+  }
+  to {
+    background-color: #FF0;
+  }
+
+}
+
+#leftFrame {
+  background-color: lightslategray;
+}
+
+#leftbullets {
+  color: #323232;
+}
