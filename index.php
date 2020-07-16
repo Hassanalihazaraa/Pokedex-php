@@ -1,12 +1,55 @@
-<!-- php code -->
 <?php
+//declare(strict_types=1);
+//strict mode
+ini_set('display_errors', "1");
+ini_set('display_startup_errors', "1");
+error_reporting(E_ALL);
+
+//getting the input and fetch data from api and display the pokemon
 if (isset($_GET['search']) && !empty('search')) {
     $pokemonApi = file_get_contents('https://pokeapi.co/api/v2/pokemon/' . $_GET['search']);
-    $json = json_decode($pokemonApi, true);
-    var_dump($json);
+    $species = file_get_contents('https://pokeapi.co/api/v2/pokemon-species/' . $_GET['search']);
+    $pokemonArray = json_decode($pokemonApi, true);
+    $speciesArray = json_decode($species, true);
+}
+//get moves of the pokemon
+$pokemonMoves = [];
+for ($i = 0; $i < count($pokemonArray['moves']); $i++) {
+    array_push($pokemonMoves, $pokemonArray['moves'][$i]['move']['name']);
+}
+//random moves
+$fourMoves = array_rand($pokemonMoves, min(4, count($pokemonMoves)));
+$randomMoves = [];
+//push 4 move into array
+//var_dump($fourMoves);
+if ($fourMoves < 0) {
+    array_push($randomMoves, $pokemonArray['moves'][0]['move']['name']);
+    //var_dump($randomMoves);
+} else {
+    //foreach moves push names to array
+    foreach ($fourMoves as $moves) {
+        array_push($randomMoves, $pokemonArray['moves'][$moves]['move']['name']);
+    }
+}
+//evolution
+$previousEvo = file_get_contents($speciesArray['evolution_chain']['url']);
+$evo = json_decode($previousEvo, true);
+$evolutionNames = [];
+var_dump($evo['chain']['is_baby'], $evo['chain']['species']['name']);
+if ($evo['chain']['is_baby'] === true) {
+    array_push($evolutionNames, $evo['chain']['species']['name']);
+    /*if ($evo['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'] !== null) {
+        $evolutionName = file_get_contents('https://pokeapi.co/api/v2/pokemon/ ' . $_GET['search']);
+        $evoName = json_decode($evolutionName, true);
+        array_push($evolutionNames, $evoName['chain']['species']['name']);
+        var_dump($evo['chain']['evolves_to'][0]['evolves_to'][0]['species']['name']);
+    } else if ($evo['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'] !== null) {
+        array_push($evolutionNames, $evo['chain']['evolves_to'][0]['evolves_to'][0]['species']['name']);
+    }*/
+} else {
+    array_push($evolutionNames, "No previous evolution found");
 }
 ?>
-
 
 <!-- html -->
 <!doctype html>
@@ -33,15 +76,15 @@ if (isset($_GET['search']) && !empty('search')) {
         </div>
         <div class="pokeFrame" id="leftFrame">
             <div class="pokemonScreen">
-                <p class="name"><?php echo $json["name"]; ?></p>
-                <img class="pokemonPic" src="<?php echo $json["sprites"]["front_default"]; ?>" alt="">
+                <p class="name"><?php echo $pokemonArray["name"]; ?></p>
+                <img class="pokemonPic" src="<?php echo $pokemonArray["sprites"]["front_default"]; ?>" alt="">
                 <label class="id-label">ID:</label>
-                <p class="id"><?php echo $json["id"]; ?></p>
+                <p class="id"><?php echo $pokemonArray["id"]; ?></p>
             </div>
             <h2 id="leftbullets">• • •</h2>
         </div>
         <!-- search input -->
-        <form method="get" action="index.php" class="searchContent">
+        <form method="get" action="" class="searchContent">
             <label for="searchInput"></label>
             <input type="text" class="searchInput" id="searchInput" name="search" placeholder="Pokemon name">
             <input type="submit" class="searchButton" value="Go">
@@ -62,7 +105,9 @@ if (isset($_GET['search']) && !empty('search')) {
         </div>
         <div class="pokeFrame" id="rightframe">
             <div class="pokemonScreen">
-                <ul class="moveList"></ul>
+                <ul class="moveList">
+                    <?php echo implode('<br>', $randomMoves) ?>
+                </ul>
                 <div class="description"></div>
                 <div class="evolution">
                     <img class="evoImage" src="" alt="">
