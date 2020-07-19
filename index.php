@@ -1,53 +1,35 @@
 <?php
 //declare(strict_types=1);
 //strict mode
-ini_set('display_errors', "1");
-ini_set('display_startup_errors', "1");
-error_reporting(E_ALL);
+//ini_set('display_errors', "1");
+//ini_set('display_startup_errors', "1");
+//error_reporting(E_ALL);
 
-//getting the input and fetch data from api and display the pokemon
-if (isset($_GET['search']) && !empty('search')) {
-    $pokemonApi = file_get_contents('https://pokeapi.co/api/v2/pokemon/' . $_GET['search']);
-    $species = file_get_contents('https://pokeapi.co/api/v2/pokemon-species/' . $_GET['search']);
-    $pokemonArray = json_decode($pokemonApi, true);
-    $speciesArray = json_decode($species, true);
+//getting the input and fetch data from api and convert object into associative array
+$pokemonApi = json_decode(file_get_contents('https://pokeapi.co/api/v2/pokemon/' . $_GET['search']), true);
+$species = json_decode(file_get_contents($pokemonApi['species']['url']), true);
+$evolveFrom = json_decode(file_get_contents($species['evolves_from_species']['url']), true);
+$evolveTo = json_decode(file_get_contents($species['evolution_chain']['url']), true);
+
+//check if the user enter pokemon name or id
+function validate()
+{
+    $search = $_GET['search'];
+    if (empty($search)) {
+        echo 'Please enter a Pokemon name or ID';
+    }
+    return;
 }
+
 //get moves of the pokemon
 $pokemonMoves = [];
-for ($i = 0; $i < count($pokemonArray['moves']); $i++) {
-    array_push($pokemonMoves, $pokemonArray['moves'][$i]['move']['name']);
-}
-//random moves
-$fourMoves = array_rand($pokemonMoves, min(4, count($pokemonMoves)));
 $randomMoves = [];
-//push 4 move into array
-//var_dump($fourMoves);
-if ($fourMoves < 0) {
-    array_push($randomMoves, $pokemonArray['moves'][0]['move']['name']);
-    //var_dump($randomMoves);
-} else {
-    //foreach moves push names to array
-    foreach ($fourMoves as $moves) {
-        array_push($randomMoves, $pokemonArray['moves'][$moves]['move']['name']);
-    }
+foreach ($pokemonApi['moves'] as $move) {
+    array_push($pokemonMoves, $pokemonApi['moves'][$move]['move']['name']);
 }
-//evolution
-$previousEvo = file_get_contents($speciesArray['evolution_chain']['url']);
-$evo = json_decode($previousEvo, true);
-$evolutionNames = [];
-var_dump($evo['chain']['is_baby'], $evo['chain']['species']['name']);
-if ($evo['chain']['is_baby'] === true) {
-    array_push($evolutionNames, $evo['chain']['species']['name']);
-    /*if ($evo['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'] !== null) {
-        $evolutionName = file_get_contents('https://pokeapi.co/api/v2/pokemon/ ' . $_GET['search']);
-        $evoName = json_decode($evolutionName, true);
-        array_push($evolutionNames, $evoName['chain']['species']['name']);
-        var_dump($evo['chain']['evolves_to'][0]['evolves_to'][0]['species']['name']);
-    } else if ($evo['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'] !== null) {
-        array_push($evolutionNames, $evo['chain']['evolves_to'][0]['evolves_to'][0]['species']['name']);
-    }*/
-} else {
-    array_push($evolutionNames, "No previous evolution found");
+$fourRandomMoves = array_rand($pokemonMoves, min(4, count($pokemonMoves)));
+foreach ($fourRandomMoves as $moves) {
+    array_push($randomMoves, $pokemonApi['moves'][$moves]['move']['name']);
 }
 ?>
 
@@ -65,7 +47,7 @@ if ($evo['chain']['is_baby'] === true) {
 </head>
 <body>
 <header>
-    <H1>Pokemon Pokédex</H1>
+    <H1>Pokédex</H1>
 </header>
 <div class="aParent">
     <!-- First screen -->
@@ -76,16 +58,15 @@ if ($evo['chain']['is_baby'] === true) {
         </div>
         <div class="pokeFrame" id="leftFrame">
             <div class="pokemonScreen">
-                <p class="name"><?php echo $pokemonArray["name"]; ?></p>
-                <img class="pokemonPic" src="<?php echo $pokemonArray["sprites"]["front_default"]; ?>" alt="">
-                <label class="id-label">ID:</label>
-                <p class="id"><?php echo $pokemonArray["id"]; ?></p>
+                <p class="name"><?php echo ucfirst($pokemonApi["name"]) ?></p>
+                <img class="pokemonPic" src="<?php echo $pokemonApi["sprites"]["front_default"]; ?>" alt="pokemon">
+                <p class="id">Pokemon ID: <?php echo $pokemonApi["id"]; ?></p>
             </div>
             <h2 id="leftbullets">• • •</h2>
         </div>
         <!-- search input -->
         <form method="get" action="" class="searchContent">
-            <label for="searchInput"></label>
+            <p class="label"><?php validate(); ?> </p>
             <input type="text" class="searchInput" id="searchInput" name="search" placeholder="Pokemon name">
             <input type="submit" class="searchButton" value="Go">
         </form>
@@ -106,20 +87,23 @@ if ($evo['chain']['is_baby'] === true) {
         <div class="pokeFrame" id="rightframe">
             <div class="pokemonScreen">
                 <ul class="moveList">
-                    <?php echo implode('<br>', $randomMoves) ?>
+                    <?php foreach ($randomMoves as $random) {
+                        echo "<li>" . ucfirst($random) . "</li>";
+                    } ?>
                 </ul>
                 <div class="description"></div>
                 <div class="evolution">
-                    <img class="evoImage" src="" alt="">
-                    <p class="evoName"></p>
+                    <p> Previous evolution</p>
+                    <?php if ($species['evolves_from_species'] !== null) {
+                        echo "<p>" . ucfirst($species['evolves_from_species']['name']) . "</p>";
+                        $preEvoSpecies = json_decode(file_get_contents($evolveFrom['varieties'][0]['pokemon']['url']), true);
+                        echo '<img class="evoImage" src="' . $preEvoSpecies["sprites"]["front_default"] . '" alt="">';
+                    } else {
+                        echo '<p> No previous evolution found.</p>';
+                    } ?>
                 </div>
             </div>
             <h2>• • •</h2>
-        </div>
-        <!-- Previous and Next buttons -->
-        <div class="buttons">
-            <button class="previous"><</button>
-            <button class="next">></button>
         </div>
     </div>
 </div>

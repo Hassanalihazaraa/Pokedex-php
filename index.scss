@@ -166,12 +166,6 @@ h2 {
   transform: translateY(4px);
 }
 
-.id-label {
-  display: none;
-  font-family: 'Fredoka One', cursive;
-  font-size: 20px;
-}
-
 .pokemonPic {
   width: 50%;
   height: 50%;
@@ -182,7 +176,8 @@ h2 {
 }
 
 .id {
-  font-size: 1.5rem;
+  font-family: 'Fredoka One', cursive;
+  font-size: 20px;
 }
 
 .moveList {
@@ -190,6 +185,7 @@ h2 {
   list-style-type: none;
   font-family: 'Fredoka One', cursive;
   font-size: 20px;
+  padding: 0;
 }
 
 //evolution
@@ -198,15 +194,18 @@ h2 {
   font-size: 20px;
 }
 
-.evolution {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.evoImage {
+  width: 40%;
+  height: 40%;
 }
 
-.evoImage {
-  width: 30%;
-  height: 30%;
+.label {
+  font-family: 'Fredoka One', cursive;
+}
+
+.evolution > p {
+  font-family: 'Fredoka One', cursive;
+  margin: 0;
 }
 
 .pokeLogo {
